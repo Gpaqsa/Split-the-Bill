@@ -1,10 +1,15 @@
 import Friend from "./Friend";
 
-const FriendsList = ({ initialFriends }) => {
+const FriendsList = ({ friends, onSelection, selectedFriend }) => {
   return (
-    <ul className="sidebar">
-      {initialFriends.map((friend) => (
-          <Friend name={friend.name} image={friend.image} key={friend.id} balance={friend.balance} />
+    <ul>
+      {friends.map((friend) => (
+        <Friend
+          friend={friend}
+          key={friend.id}
+          selectedFriend={selectedFriend}
+          onSelection={onSelection}
+        />
       ))}
     </ul>
   );
