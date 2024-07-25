@@ -33,19 +33,30 @@ function App() {
 
   const handleShowAddFriend = () => {
     setShowAddFriend((show) => !show);
-    setSelectedFriend(false);
+    setSelectedFriend(null);
   };
 
   const handleAddFriend = (newFriend) => {
     setFriends((friends) => [...friends, newFriend]);
     setShowAddFriend(false);
-    setSelectedFriend(false);
+    setSelectedFriend(null);
   };
 
   const handleSelection = (friend) => {
     console.log(friend);
     setSelectedFriend((cur) => (cur?.id ? null : friend));
-    setShowAddFriend(false);
+    setShowAddFriend(null);
+  };
+
+  const handleSplitBill = (value) => {
+    setFriends((friends) =>
+      friends.map((friend) =>
+        friend.id === selectedFriend.id
+          ? { ...friend, balance: friend.balance + value }
+          : friend
+      )
+    );
+    setSelectedFriend(false);
   };
 
   return (
@@ -68,7 +79,12 @@ function App() {
         </Button>
       </div>
 
-      {selectedFriend && <FormSplitBill selectedFriend={selectedFriend} />}
+      {selectedFriend && (
+        <FormSplitBill
+          selectedFriend={selectedFriend}
+          onSplitBill={handleSplitBill}
+        />
+      )}
     </div>
   );
 }
